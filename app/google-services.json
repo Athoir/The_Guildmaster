@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "832595741553",
+    "project_id": "the-guildmaster"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832595741553:android:0af54d5f9d163427",
+        "android_client_info": {
+          "package_name": "com.retardprod.lo10.the_guildmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832595741553-bl8odaq1afihku8v5vq75dit9r4bbln1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.retardprod.lo10.the_guildmaster",
+            "certificate_hash": "3e159fe123738a0bb9655e6aafdee75836efa845"
+          }
+        },
+        {
+          "client_id": "832595741553-52t7j2sbmfmuca8qh276kn8qplk20r03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfb5CmvwtEPVpgRGmfvWuvtUAx3k-ks8E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
