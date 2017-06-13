@@ -13,6 +13,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
@@ -74,6 +81,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             Log.d(TAG,"google id:"+result.getSignInAccount().getId());
+            GuildAPIClient.get("/player/login/:"+result.getSignInAccount().getId(),null,new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // If the response is JSONObject instead of expected JSONArray
+                    Log.d(TAG, "onSuccess: "+response.toString());
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers,Throwable e,JSONObject response) {
+                    // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                    if (statusCode == 404 && response.isNull("_id")){
+                        //TODO ajouter un dialoque pour demander le pseudo ici
+                    }
+                }
+
+            });
         }
     }
 
