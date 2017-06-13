@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final String TAG = "Login";
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
-    private boolean login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            login = true;
                         }
                     });
                 }
