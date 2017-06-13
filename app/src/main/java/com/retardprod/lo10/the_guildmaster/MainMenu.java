@@ -38,7 +38,13 @@ public class MainMenu extends Activity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d(TAG, "onSuccess: "+ response.toString());
-
+                try {
+                    PublicData.CHARACTERS = response.getJSONArray("characters");
+                    PublicData.AVAILABLEQUESTS = response.getJSONObject("quests").getJSONArray("availableQuests");
+                    PublicData.CURRENTQUESTS = response.getJSONObject("quests").getJSONArray("currentQuests");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
