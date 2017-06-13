@@ -84,22 +84,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Log.d(TAG,"google id:"+result.getSignInAccount().getId());
             PublicData.GOOGLE_ID = result.getSignInAccount().getId();
             PublicData.MAIL = result.getSignInAccount().getEmail();
-            GuildAPIClient.get("player/login/:"+PublicData.GOOGLE_ID,null,new JsonHttpResponseHandler() {
+            GuildAPIClient.get("player/login/"+PublicData.GOOGLE_ID,null,new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Log.d(TAG, "onSuccess: "+response.toString());
                     try {
-                        PublicData.ID = response.getString("id");
+                        PublicData.ID = response.getString("_id");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    GuildAPIClient.get("player/:"+PublicData.ID,null,new JsonHttpResponseHandler(){
+                    GuildAPIClient.get("player/"+PublicData.ID,null,new JsonHttpResponseHandler(){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
                                 PublicData.REPUTATION = response.getInt("reputation");
                                 PublicData.MONEY = response.getInt("money");
                                 PublicData.NAME = response.getString("name");
+                                Intent intent = new Intent(LoginActivity.this, MainMenu.class);
+                                startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -113,17 +115,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     // called when response HTTP status is "4XX" (eg. 401, 403, 404)
                     if (statusCode == 404 && response.isNull("_id")){
                         Log.d(TAG, "onFailure: "+response.toString());
+                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                        startActivity(intent);
                     }
                 }
 
             });
-            if (login){
-                Intent intent = new Intent(this, MainMenu.class);
-                startActivity(intent);
-            } else{
-                Intent intent = new Intent(this, RegisterActivity.class);
-                startActivity(intent);
-            }
+
         }
     }
 
