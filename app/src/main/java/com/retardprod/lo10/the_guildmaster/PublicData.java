@@ -15,4 +15,6 @@ public class PublicData {
     public static JSONArray CHARACTERS;
     public static JSONArray AVAILABLEQUESTS;
     public static JSONArray CURRENTQUESTS;
+
+    public static int SELECTED_QUEST;
 }

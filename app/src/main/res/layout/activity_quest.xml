@@ -6,7 +6,40 @@
     android:orientation="vertical"
     tools:context="com.retardprod.lo10.the_guildmaster.QuestActivity">
 
-    <ListView
+
+    <Button
+        android:id="@+id/q1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="onClickQ1"/>
+
+    <Button
+        android:id="@+id/q2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="onClickQ2"/>
+
+    <Button
+        android:id="@+id/q3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="onClickQ3"/>
+
+    <Button
+        android:id="@+id/q4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="onClickQ4"/>
+
+    <Button
+        android:id="@+id/q5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="onClickQ5"/>
+
 </LinearLayout>

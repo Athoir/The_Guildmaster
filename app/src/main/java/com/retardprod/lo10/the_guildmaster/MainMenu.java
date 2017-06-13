@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,14 +35,21 @@ public class MainMenu extends Activity {
         reput.setText("Réputation:"+reputation);
         money.setText("Argent: "+treasury);
 
-        GuildAPIClient.get("player/"+ PublicData.ID+"/complete",null,new JsonHttpResponseHandler(){
+        GuildAPIClient.get("player/"+ PublicData.ID+"/character",null,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d(TAG, "onSuccess: "+ response.toString());
+                PublicData.CHARACTERS = response;
+            }
+        });
+
+        GuildAPIClient.get("player/"+ PublicData.ID+"/quest",null,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d(TAG, "onSuccess: "+ response.toString());
                 try {
-                    PublicData.CHARACTERS = response.getJSONArray("characters");
-                    PublicData.AVAILABLEQUESTS = response.getJSONObject("quests").getJSONArray("availableQuests");
-                    PublicData.CURRENTQUESTS = response.getJSONObject("quests").getJSONArray("currentQuests");
+                    PublicData.AVAILABLEQUESTS = response.getJSONObject("availableQuests").getJSONArray("quests");
+                    PublicData.CURRENTQUESTS = response.getJSONArray("currentQuests");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
