@@ -15,6 +15,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final String TAG = "Login";
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
+    private boolean login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +83,29 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (result.isSuccess()) {
             Log.d(TAG,"google id:"+result.getSignInAccount().getId());
             PublicData.GOOGLE_ID = result.getSignInAccount().getId();
-            GuildAPIClient.get("/player/login/:"+PublicData.GOOGLE_ID,null,new JsonHttpResponseHandler() {
+            PublicData.MAIL = result.getSignInAccount().getEmail();
+            GuildAPIClient.get("player/login/:"+PublicData.GOOGLE_ID,null,new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    // If the response is JSONObject instead of expected JSONArray
                     Log.d(TAG, "onSuccess: "+response.toString());
+                    try {
+                        PublicData.ID = response.getString("id");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    GuildAPIClient.get("player/:"+PublicData.ID,null,new JsonHttpResponseHandler(){
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                PublicData.REPUTATION = response.getInt("reputation");
+                                PublicData.MONEY = response.getInt("money");
+                                PublicData.NAME = response.getString("name");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            login = true;
+                        }
+                    });
                 }
 
                 @Override
@@ -93,11 +113,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     // called when response HTTP status is "4XX" (eg. 401, 403, 404)
                     if (statusCode == 404 && response.isNull("_id")){
                         Log.d(TAG, "onFailure: "+response.toString());
-                        //TODO ajouter un dialoque pour demander le pseudo ici
                     }
                 }
 
             });
+            if (login){
+                Intent intent = new Intent(this, MainMenu.class);
+                startActivity(intent);
+            } else{
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+            }
         }
     }
 
