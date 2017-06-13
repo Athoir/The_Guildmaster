@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 public void onFailure(int statusCode, Header[] headers,Throwable e,JSONObject response) {
                     // called when response HTTP status is "4XX" (eg. 401, 403, 404)
                     if (statusCode == 404 && response.isNull("_id")){
+                        Log.d(TAG, "onFailure: "+response.toString());
                         //TODO ajouter un dialoque pour demander le pseudo ici
                     }
                 }

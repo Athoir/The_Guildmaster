@@ -4,7 +4,7 @@ import com.loopj.android.http.*;
 
 
 public class GuildAPIClient {
-    private static final String BASE_URL = "http://localhost:3000/";
+    private static final String BASE_URL = "http://lowcost-env.pebrvp3sjs.eu-west-1.elasticbeanstalk.com/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
