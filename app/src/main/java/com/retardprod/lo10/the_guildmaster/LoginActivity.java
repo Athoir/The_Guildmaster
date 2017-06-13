@@ -15,7 +15,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -81,7 +80,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             Log.d(TAG,"google id:"+result.getSignInAccount().getId());
-            GuildAPIClient.get("/player/login/:"+result.getSignInAccount().getId(),null,new JsonHttpResponseHandler() {
+            PublicData.GOOGLE_ID = result.getSignInAccount().getId();
+            GuildAPIClient.get("/player/login/:"+PublicData.GOOGLE_ID,null,new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
